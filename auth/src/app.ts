@@ -16,7 +16,7 @@ app.use(json());
 app.use(
 	cookieSession({
 		signed: false,
-		secure: true,
+		secure: process.env.NODE_ENV !== 'test',
 	})
 );
 
@@ -25,7 +25,7 @@ app.use(signInRouter);
 app.use(signOutRouter);
 app.use(signUpRouter);
 
-app.all('*', async (req, res) => {
+app.all('*', (req, res) => {
 	throw new NotFoundError();
 });
 
